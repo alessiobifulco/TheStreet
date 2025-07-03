@@ -41,3 +41,6 @@ L'efficienza dell'algoritmo di Dijkstra dipende criticamente dall'implementazion
 * **Compilatore:** Il codice è stato compilato utilizzando **GCC** con i flag `-std=c90 -Wall -Wpedantic` per garantire massima conformità e assenza di warning.
 * **Gestione della Memoria:** È stata posta massima attenzione all'allocazione e deallocazione della memoria. L'assenza di memory leak e di accessi non validi è stata verificata tramite lo strumento **Valgrind** in ambiente Linux.
 * **Input/Output:** Il programma accetta il nome di un file di input da riga di comando e produce un output formattato secondo le specifiche, contenente le coordinate del cammino minimo e il suo costo totale.
+
+* ## 👤 Contatti
+* Alessio Bifulco: `alessio.bifulco@studio.unibo.it`
