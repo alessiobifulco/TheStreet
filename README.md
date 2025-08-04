@@ -4,7 +4,7 @@ Progetto per il corso di Laboratorio di Algoritmi e Strutture Dati dell'Universi
 
 ---
 
-## 🎯 Obiettivo del Progetto
+## Obiettivo del Progetto
 
 L'obiettivo è progettare e implementare un programma in **linguaggio C (ANSI)** che calcoli il percorso di costo minimo per la costruzione di una strada su una mappa rappresentata come una griglia `n x m`. La strada deve connettere la cella di partenza `(0, 0)` con quella di arrivo `(n-1, m-1)`.
 
@@ -17,7 +17,7 @@ $C_{totale} = C_{cell} \times k + C_{height} \times \sum_{i=0}^{k-2} |H[x_{i}, y
 
 Il programma deve trovare un percorso valido che minimizzi questo costo totale.
 
-## 🧠 Approccio Algoritmico: Algoritmo di Dijkstra
+## Approccio Algoritmico: Algoritmo di Dijkstra
 
 Il problema può essere modellato come la ricerca del **cammino minimo su un grafo pesato**.
 
@@ -35,12 +35,12 @@ L'algoritmo funziona mantenendo una stima del costo minimo per raggiungere ogni 
 ### 3. Gestione della Coda a Priorità
 L'efficienza dell'algoritmo di Dijkstra dipende criticamente dall'implementazione della **coda a priorità**, utilizzata per selezionare il prossimo nodo da visitare (quello con la distanza minima non ancora finalizzata). La gestione di questa struttura dati è stata un punto chiave dell'implementazione. L'algoritmo, partendo dal nodo `(0,0)`, esplora il grafo e costruisce l'albero dei cammini minimi fino a raggiungere ed estrarre dalla coda il nodo di destinazione `(n-1, m-1)`.
 
-## 🛠️ Tecnologie e Vincoli di Progetto
+## 🛠Tecnologie e Vincoli di Progetto
 
 * **Linguaggio:** Il progetto è stato sviluppato interamente in **ANSI C (C89/C90)**, rispettando scrupolosamente le specifiche del corso.
 * **Compilatore:** Il codice è stato compilato utilizzando **GCC** con i flag `-std=c90 -Wall -Wpedantic` per garantire massima conformità e assenza di warning.
 * **Gestione della Memoria:** È stata posta massima attenzione all'allocazione e deallocazione della memoria. L'assenza di memory leak e di accessi non validi è stata verificata tramite lo strumento **Valgrind** in ambiente Linux.
 * **Input/Output:** Il programma accetta il nome di un file di input da riga di comando e produce un output formattato secondo le specifiche, contenente le coordinate del cammino minimo e il suo costo totale.
 
-## 👤 Contatti
+## Contatti
 * Alessio Bifulco: `alessio.bifulco@studio.unibo.it`
