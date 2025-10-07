@@ -1,46 +1,67 @@
-# Progetto di Algoritmi e Strutture Dati: Costruzione di una Strada di Costo Minimo
+# Minimum-Cost Road Construction Project
 
-Progetto per il corso di Laboratorio di Algoritmi e Strutture Dati dell'Università di Bologna (A.A. 2023/2024), basato sulle specifiche ufficiali.
+**Project for the Algorithms and Data Structures Lab course** at the University of Bologna (A.Y. 2023/2024), based on official specifications.
 
 ---
 
-## Obiettivo del Progetto
+## Project Objective
 
-L'obiettivo è progettare e implementare un programma in **linguaggio C (ANSI)** che calcoli il percorso di costo minimo per la costruzione di una strada su una mappa rappresentata come una griglia `n x m`. La strada deve connettere la cella di partenza `(0, 0)` con quella di arrivo `(n-1, m-1)`.
+The goal is to design and implement a program in **ANSI C** that computes the minimum-cost path for constructing a road on a map represented as an `n x m` grid.  
+The road must connect the starting cell `(0, 0)` to the destination cell `(n-1, m-1)`.
 
-Il costo totale è determinato da due fattori:
-1.  Un costo fisso **$C_{cell}$** per ogni cella attraversata.
-2.  Un costo variabile dipendente dal dislivello tra celle adiacenti, calcolato come **$C_{height} \times (\Delta H)^2$**.
+The total cost is determined by two factors:
 
-La formula del costo totale per un percorso di $k$ celle è:
-$C_{totale} = C_{cell} \times k + C_{height} \times \sum_{i=0}^{k-2} |H[x_{i}, y_{i}] - H[x_{i+1}, y_{i+1}]|^2$
+1. A fixed cost **$C_{cell}$** for each cell traversed.  
+2. A variable cost based on the elevation difference between adjacent cells, calculated as **$C_{height} \times (\Delta H)^2$**.
 
-Il programma deve trovare un percorso valido che minimizzi questo costo totale.
+The total cost for a path of $k$ cells is:
 
-## Approccio Algoritmico: Algoritmo di Dijkstra
+$$
+C_{total} = C_{cell} \times k + C_{height} \times \sum_{i=0}^{k-2} |H[x_{i}, y_{i}] - H[x_{i+1}, y_{i+1}]|^2
+$$
 
-Il problema può essere modellato come la ricerca del **cammino minimo su un grafo pesato**.
+The program must find a valid path that minimizes this total cost.
 
-### 1. Modellazione del Grafo
-* **Nodi:** Ogni cella `(i, j)` della griglia `n x m` viene considerata come un nodo del grafo. Il numero totale di nodi è $V = n \times m$.
-* **Archi:** Esiste un arco tra due nodi se e solo se le celle corrispondenti sulla griglia sono adiacenti (hanno un lato in comune). Ogni nodo interno alla griglia avrà quindi 4 archi uscenti (verso N, S, E, O).
-* **Pesi degli Archi:** Il peso di un arco che connette una cella `u` a una cella adiacente `v` non è semplicemente il costo del dislivello, ma rappresenta il costo totale per "spostarsi" da `u` a `v`. Questo include sia il costo per "entrare" nella cella `v` sia il costo legato al dislivello tra `u` e `v`. Pertanto, il peso dell'arco $(u, v)$ è:
-    $w(u, v) = C_{cell} + C_{height} \times (H_u - H_v)^2$
+---
 
-### 2. Algoritmo di Dijkstra
-Una volta modellato il problema in questo modo, l'obiettivo diventa trovare il cammino di costo minimo dal nodo sorgente `(0, 0)` al nodo destinazione `(n-1, m-1)`. Poiché i pesi degli archi sono sempre non-negativi, l'**algoritmo di Dijkstra** è la scelta ideale per risolvere questo problema.
+## Algorithmic Approach: Dijkstra's Algorithm
 
-L'algoritmo funziona mantenendo una stima del costo minimo per raggiungere ogni nodo e aggiornando iterativamente queste stime partendo dal nodo sorgente.
+The problem can be modeled as finding the **shortest path on a weighted graph**.
 
-### 3. Gestione della Coda a Priorità
-L'efficienza dell'algoritmo di Dijkstra dipende criticamente dall'implementazione della **coda a priorità**, utilizzata per selezionare il prossimo nodo da visitare (quello con la distanza minima non ancora finalizzata). La gestione di questa struttura dati è stata un punto chiave dell'implementazione. L'algoritmo, partendo dal nodo `(0,0)`, esplora il grafo e costruisce l'albero dei cammini minimi fino a raggiungere ed estrarre dalla coda il nodo di destinazione `(n-1, m-1)`.
+### 1. Graph Modeling
 
-## 🛠Tecnologie e Vincoli di Progetto
+- **Nodes:** Each cell `(i, j)` in the `n x m` grid is treated as a graph node. The total number of nodes is $V = n \times m$.  
+- **Edges:** An edge exists between two nodes if the corresponding cells are adjacent (sharing a side). Each internal node has up to 4 outgoing edges (to N, S, E, W).  
+- **Edge Weights:** The weight of an edge from cell `u` to an adjacent cell `v` represents the total cost of moving from `u` to `v`, including both the cell cost and the elevation cost:
 
-* **Linguaggio:** Il progetto è stato sviluppato interamente in **ANSI C (C89/C90)**, rispettando scrupolosamente le specifiche del corso.
-* **Compilatore:** Il codice è stato compilato utilizzando **GCC** con i flag `-std=c90 -Wall -Wpedantic` per garantire massima conformità e assenza di warning.
-* **Gestione della Memoria:** È stata posta massima attenzione all'allocazione e deallocazione della memoria. L'assenza di memory leak e di accessi non validi è stata verificata tramite lo strumento **Valgrind** in ambiente Linux.
-* **Input/Output:** Il programma accetta il nome di un file di input da riga di comando e produce un output formattato secondo le specifiche, contenente le coordinate del cammino minimo e il suo costo totale.
+$$
+w(u, v) = C_{cell} + C_{height} \times (H_u - H_v)^2
+$$
 
-## Contatti
-* Alessio Bifulco: `alessio.bifulco@studio.unibo.it`
+### 2. Dijkstra's Algorithm
+
+Once modeled this way, the goal is to find the minimum-cost path from the source node `(0, 0)` to the target node `(n-1, m-1)`.  
+Since all edge weights are non-negative, **Dijkstra's algorithm** is ideal for this problem.  
+
+The algorithm maintains an estimate of the minimum cost to reach each node and updates these estimates iteratively starting from the source.
+
+### 3. Priority Queue Management
+
+The efficiency of Dijkstra’s algorithm critically depends on the **priority queue** implementation, used to select the next node to visit (the node with the smallest tentative distance).  
+Starting from `(0,0)`, the algorithm explores the graph and builds the shortest-path tree until the destination node `(n-1, m-1)` is reached and extracted from the queue.
+
+---
+
+## Technologies and Project Constraints
+
+- **Language:** ANSI C (C89/C90), strictly following course specifications.  
+- **Compiler:** GCC with flags `-std=c90 -Wall -Wpedantic` to ensure full compliance and no warnings.  
+- **Memory Management:** Careful attention to allocation and deallocation; absence of memory leaks and invalid access verified using **Valgrind** on Linux.  
+- **Input/Output:** The program accepts an input file name via command line and outputs the minimum-cost path coordinates and total cost, formatted according to the specifications.
+
+---
+
+## Contact
+
+ 
+* Alessio Bifulco:  `alessio.bifulco@studio.unibo.it`
